@@ -1,6 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>CarterAndMVC</AssemblyName>
     <OutputType>Exe</OutputType>
     <LangVersion>latest</LangVersion>
@@ -11,4 +12,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Carter\Carter.csproj" />
   </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

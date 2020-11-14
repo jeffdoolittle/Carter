@@ -4,6 +4,7 @@ namespace Carter.Samples.Tests
     using System.Net;
     using System.Net.Http;
     using System.Text;
+    using System.Text.Json;
     using System.Threading.Tasks;
     using CarterSample;
     using CarterSample.Features.FunctionalProgramming;
@@ -17,7 +18,6 @@ namespace Carter.Samples.Tests
     using Microsoft.AspNetCore.Hosting.Server.Features;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.TestHost;
-    using Newtonsoft.Json;
     using Xunit;
 
     public class FunctionalTests
@@ -76,7 +76,7 @@ namespace Carter.Samples.Tests
             RouteHandlers.CreateDirectorHandler = director => CreateDirectorRoute.Handle(director, newDirector => 1);
 
             //When
-            var res = await this.client.PostAsync("/functional/directors", new StringContent(JsonConvert.SerializeObject(new Director { Name = "Jon Favreau" }), Encoding.UTF8, "application/json"));
+            var res = await this.client.PostAsync("/functional/directors", new StringContent(JsonSerializer.Serialize(new Director { Name = "Jon Favreau" }), Encoding.UTF8, "application/json"));
 
             //Then
             Assert.Equal(HttpStatusCode.Created, res.StatusCode);
@@ -90,7 +90,7 @@ namespace Carter.Samples.Tests
             RouteHandlers.CreateDirectorHandler = director => CreateDirectorRoute.Handle(director, newDirector => 1);
 
             //When
-            var res = await this.client.PostAsync("/functional/directors", new StringContent(JsonConvert.SerializeObject(new Director { Name = "" }), Encoding.UTF8, "application/json"));
+            var res = await this.client.PostAsync("/functional/directors", new StringContent(JsonSerializer.Serialize(new Director { Name = "" }), Encoding.UTF8, "application/json"));
 
             //Then
             Assert.Equal(422, (int)res.StatusCode);
@@ -103,7 +103,7 @@ namespace Carter.Samples.Tests
             RouteHandlers.UpdateDirectorHandler = director => UpdateDirectorRoute.Handle(director, newDirector => 1, () => true);
 
             //When
-            var res = await this.client.PutAsync("/functional/directors/1", new StringContent(JsonConvert.SerializeObject(new Director { Name = "" }), Encoding.UTF8, "application/json"));
+            var res = await this.client.PutAsync("/functional/directors/1", new StringContent(JsonSerializer.Serialize(new Director { Name = "" }), Encoding.UTF8, "application/json"));
 
             //Then
             Assert.Equal(422, (int)res.StatusCode);
@@ -116,7 +116,7 @@ namespace Carter.Samples.Tests
             RouteHandlers.UpdateDirectorHandler = director => UpdateDirectorRoute.Handle(director, newDirector => 1, () => true);
 
             //When
-            var res = await this.client.PutAsync("/functional/directors/1", new StringContent(JsonConvert.SerializeObject(new Director { Name = "Plop" }), Encoding.UTF8, "application/json"));
+            var res = await this.client.PutAsync("/functional/directors/1", new StringContent(JsonSerializer.Serialize(new Director { Name = "Plop" }), Encoding.UTF8, "application/json"));
 
             //Then
             Assert.Equal(204, (int)res.StatusCode);
@@ -129,7 +129,7 @@ namespace Carter.Samples.Tests
             RouteHandlers.UpdateDirectorHandler = director => UpdateDirectorRoute.Handle(director, newDirector => 1, () => false);
 
             //When
-            var res = await this.client.PutAsync("/functional/directors/1", new StringContent(JsonConvert.SerializeObject(new Director { Name = "Plop" }), Encoding.UTF8, "application/json"));
+            var res = await this.client.PutAsync("/functional/directors/1", new StringContent(JsonSerializer.Serialize(new Director { Name = "Plop" }), Encoding.UTF8, "application/json"));
 
             //Then
             Assert.Equal(403, (int)res.StatusCode);
@@ -142,7 +142,7 @@ namespace Carter.Samples.Tests
             RouteHandlers.UpdateDirectorHandler = director => UpdateDirectorRoute.Handle(director, newDirector => 0, () => true);
 
             //When
-            var res = await this.client.PutAsync("/functional/directors/1", new StringContent(JsonConvert.SerializeObject(new Director { Name = "Plop" }), Encoding.UTF8, "application/json"));
+            var res = await this.client.PutAsync("/functional/directors/1", new StringContent(JsonSerializer.Serialize(new Director { Name = "Plop" }), Encoding.UTF8, "application/json"));
 
             //Then
             Assert.Equal(400, (int)res.StatusCode);

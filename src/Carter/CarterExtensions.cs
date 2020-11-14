@@ -217,7 +217,6 @@ namespace Carter
                         !t.IsAbstract &&
                         typeof(IModelBinder).IsAssignableFrom(t) &&
                         t != typeof(IModelBinder) &&
-                        t != typeof(NewtonsoftJsonModelBinder) &&
                         t != typeof(DefaultJsonModelBinder)
                     )).FirstOrDefault();
 
@@ -241,8 +240,7 @@ namespace Carter
                         !t.IsAbstract &&
                         typeof(IResponseNegotiator).IsAssignableFrom(t) &&
                         t != typeof(IResponseNegotiator) &&
-                        t != typeof(DefaultJsonResponseNegotiator) &&
-                        t != typeof(NewtonsoftJsonResponseNegotiator)
+                        t != typeof(DefaultJsonResponseNegotiator)
                     ));
 
                 carterConfigurator.ResponseNegotiatorTypes.AddRange(responseNegotiators);

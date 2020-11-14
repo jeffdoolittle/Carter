@@ -8,6 +8,5 @@ nuget Microsoft.Extensions.DependencyModel 3.1.0
 nuget Microsoft.OpenApi 1.1.4
 nuget Microsoft.SourceLink.GitHub 1.0.0-beta2-19554-01 prerelease
 nuget MinVer 2.0.0
-nuget Newtonsoft.Json 12.0.3
 nuget Shouldly 4.0.0-beta0002 prerelease
 nuget Swashbuckle.AspNetCore.SwaggerUi 5.0.0-rc4 prerelease

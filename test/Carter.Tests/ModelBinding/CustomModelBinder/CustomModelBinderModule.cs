@@ -7,11 +7,11 @@ namespace Carter.Tests.ModelBinding.CustomModelBinder
     {
         public CustomModelBinderModule()
         {
-            this.Post("/bind", async (req, res) =>
-            {
-                var model = await req.Bind<ModelOnlyNewtonsoftCanParse>();
-                await res.Negotiate(model);
-            });
+            // // this.Post("/bind", async (req, res) =>
+            // // {
+            // //     var model = await req.Bind<ModelOnlyNewtonsoftCanParse>();
+            // //     await res.Negotiate(model);
+            // });
         }
     }
 }

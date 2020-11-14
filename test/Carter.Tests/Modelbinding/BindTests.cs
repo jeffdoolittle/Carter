@@ -12,7 +12,6 @@ namespace Carter.Tests.ModelBinding
     using System.Threading.Tasks;
     using Carter.ModelBinding;
     // using FluentValidation.Results;
-    using global::Newtonsoft.Json;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.TestHost;
@@ -86,7 +85,7 @@ namespace Carter.Tests.ModelBinding
 
             //When
             var body = await res.Content.ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<TestModel>(body);
+            var model = JsonSerializer.Deserialize<TestModel>(body);
 
             //Then
             Assert.Equal(1, model.MyIntProperty);
@@ -134,7 +133,7 @@ namespace Carter.Tests.ModelBinding
 
                 var res = await this.httpClient.PostAsync("/bindandsavecustomname", multipartFormData);
                 var body = await res.Content.ReadAsStringAsync();
-                var model = JsonConvert.DeserializeObject<PathTestModel>(body);
+                var model = JsonSerializer.Deserialize<PathTestModel>(body);
 
                 Assert.True(res.IsSuccessStatusCode);
                 Assert.True(Directory.Exists(model.Path));
@@ -169,7 +168,7 @@ namespace Carter.Tests.ModelBinding
 
                 var res = await this.httpClient.PostAsync("/bindandsave", multipartFormData);
                 var body = await res.Content.ReadAsStringAsync();
-                var model = JsonConvert.DeserializeObject<PathTestModel>(body);
+                var model = JsonSerializer.Deserialize<PathTestModel>(body);
 
                 Assert.True(res.IsSuccessStatusCode);
                 Assert.True(Directory.Exists(model.Path));
@@ -191,7 +190,7 @@ namespace Carter.Tests.ModelBinding
                     "{\"MyIntProperty\":911,\"MyStringProperty\":\"Vincent Vega\"}",
                     Encoding.UTF8, "application/json"));
             var body = await res.Content.ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<TestModel>(body);
+            var model = JsonSerializer.Deserialize<TestModel>(body);
 
             Assert.Equal(911, model.MyIntProperty);
             Assert.Equal("Vincent Vega", model.MyStringProperty);
@@ -205,7 +204,7 @@ namespace Carter.Tests.ModelBinding
                     "{\"myIntProperty\":911,\"myStringProperty\":\"Vincent Vega\"}",
                     Encoding.UTF8, "application/json"));
             var body = await res.Content.ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<TestModel>(body);
+            var model = JsonSerializer.Deserialize<TestModel>(body);
 
             Assert.Equal(911, model.MyIntProperty);
             Assert.Equal("Vincent Vega", model.MyStringProperty);
@@ -223,7 +222,7 @@ namespace Carter.Tests.ModelBinding
                     }));
 
             var body = await res.Content.ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<TestModel>(body);
+            var model = JsonSerializer.Deserialize<TestModel>(body);
 
             Assert.Equal(0, model.MyIntProperty);
             Assert.Equal("Vincent Vega", model.MyStringProperty);
@@ -238,7 +237,7 @@ namespace Carter.Tests.ModelBinding
                     Encoding.UTF8, "application/json"));
 
             var body = await res.Content.ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<TestModel>(body);
+            var model = JsonSerializer.Deserialize<TestModel>(body);
 
             Assert.Equal(911, model.MyIntProperty);
             Assert.Equal("Vincent Vega", model.MyStringProperty);
@@ -265,7 +264,7 @@ namespace Carter.Tests.ModelBinding
 
                 var res = await this.httpClient.PostAsync("/bindandsave", multipartFormData);
                 var body = await res.Content.ReadAsStringAsync();
-                var model = JsonConvert.DeserializeObject<PathTestModel>(body);
+                var model = JsonSerializer.Deserialize<PathTestModel>(body);
 
                 Assert.True(res.IsSuccessStatusCode);
                 Assert.True(Directory.Exists(model.Path));
@@ -282,7 +281,7 @@ namespace Carter.Tests.ModelBinding
         //         new StringContent("{\"MyIntProperty\":\"-1\",\"MyStringProperty\":\"\"}",
         //             Encoding.UTF8, "application/json"));
         //     var body = await res.Content.ReadAsStringAsync();
-        //     var model = JsonConvert.DeserializeObject<List<ValidationFailure>>(body);
+        //     var model = JsonSerializer.Deserialize<List<ValidationFailure>>(body);
 
         //     Assert.Equal(2, model.Count);
         // }
@@ -330,7 +329,7 @@ namespace Carter.Tests.ModelBinding
         //             Encoding.UTF8, "application/json"));
 
         //     var body = await res.Content.ReadAsStringAsync();
-        //     var model = JsonConvert.DeserializeObject<List<ValidationFailure>>(body);
+        //     var model = JsonSerializer.Deserialize<List<ValidationFailure>>(body);
 
         //     Assert.Equal(HttpStatusCode.UnprocessableEntity, res.StatusCode);
         //     Assert.Equal(2, model.Count);

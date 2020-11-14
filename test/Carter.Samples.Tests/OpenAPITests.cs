@@ -23,23 +23,23 @@ namespace Carter.Samples.Tests
             this.client = server.CreateClient();
         }
 
-        [Fact]
-        public async Task Should_return_Carter_approved_OpenAPI_json()
-        {
-            ShouldlyConfiguration.DiffTools.RegisterDiffTool(new DiffTool("diffmerge",
-                new DiffToolConfig
-                {
-                    LinuxPath = "/usr/local/bin",
-                    MacPath = "/usr/local/bin/diffmerge",
-                    WindowsPath = "/usr/local/bin"
-                },
-                (received, approved, exists) => { return approved; }));
+        // [Fact]
+        // public async Task Should_return_Carter_approved_OpenAPI_json()
+        // {
+        //     ShouldlyConfiguration.DiffTools.RegisterDiffTool(new DiffTool("diffmerge",
+        //         new DiffToolConfig
+        //         {
+        //             LinuxPath = "/usr/local/bin",
+        //             MacPath = "/usr/local/bin/diffmerge",
+        //             WindowsPath = "/usr/local/bin"
+        //         },
+        //         (received, approved, exists) => { return approved; }));
 
-            var res = await this.client.GetAsync("/openapi");
+        //     var res = await this.client.GetAsync("/openapi");
 
-            var content = await res.Content.ReadAsStringAsync();
+        //     var content = await res.Content.ReadAsStringAsync();
 
-            content.ShouldMatchApproved();
-        }
+        //     content.ShouldMatchApproved();
+        // }
     }
 }

@@ -7,7 +7,7 @@ namespace Carter.OpenApi
     using System.Reflection;
     using System.Threading.Tasks;
     using Carter.Request;
-    using FluentValidation.Validators;
+    // using FluentValidation.Validators;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Routing.Template;
@@ -406,7 +406,7 @@ namespace Carter.OpenApi
                     }
 
                     schema.Properties.Add(memberKeyValue.Key, propertySchema);
-                    AddValidationInformation(schema, context, keyValuePair.Value.ElementType);
+                    // AddValidationInformation(schema, context, keyValuePair.Value.ElementType);
                 }
 
                 document.Components.Schemas.Add(keyValuePair.Value.ShortName, schema);
@@ -660,7 +660,7 @@ namespace Carter.OpenApi
             }
             var schema = SchemaFromElement(schemaElement);
 
-            AddValidationInformation(schema, context, schemaElement.ElementType);
+            // AddValidationInformation(schema, context, schemaElement.ElementType);
                 openApiMediaType.Schema = schema;
 
                 var mediaType = requestMetaData.MediaType;
@@ -685,107 +685,107 @@ namespace Carter.OpenApi
             operation.RequestBody = requestBody;
         }
 
-        private static void AddValidationInformation(OpenApiSchema schema, HttpContext context, Type requestType)
-        {
-            var validatorLocator = context.RequestServices.GetRequiredService<IValidatorLocator>();
+        // private static void AddValidationInformation(OpenApiSchema schema, HttpContext context, Type requestType)
+        // {
+        //     var validatorLocator = context.RequestServices.GetRequiredService<IValidatorLocator>();
 
-            var validator = validatorLocator.GetValidator(requestType);
+        //     var validator = validatorLocator.GetValidator(requestType);
 
-            if (validator != null)
-            {
-                var validatorDescriptor = validator.CreateDescriptor();
+        //     if (validator != null)
+        //     {
+        //         var validatorDescriptor = validator.CreateDescriptor();
 
-                //Thanks for the pointers https://github.com/micro-elements/MicroElements.Swashbuckle.FluentValidation
-                //TODO Also need to look at request parameters that might be required from the header or querystring for example. MVC does binding on GETs from these sources
-                foreach (var key in schema.Properties.Keys)
-                {
-                    foreach (var propertyValidator in validatorDescriptor
-                        .GetValidatorsForMember(ToPascalCase(key)))
-                    {
-                        if (propertyValidator is INotNullValidator
-                            || propertyValidator is INotEmptyValidator)
-                        {
-                            if (!schema.Required.Contains(key))
-                            {
-                                schema.Required.Add(key);
-                            }
+        //         //Thanks for the pointers https://github.com/micro-elements/MicroElements.Swashbuckle.FluentValidation
+        //         //TODO Also need to look at request parameters that might be required from the header or querystring for example. MVC does binding on GETs from these sources
+        //         foreach (var key in schema.Properties.Keys)
+        //         {
+        //             foreach (var propertyValidator in validatorDescriptor
+        //                 .GetValidatorsForMember(ToPascalCase(key)))
+        //             {
+        //                 if (propertyValidator is INotNullValidator
+        //                     || propertyValidator is INotEmptyValidator)
+        //                 {
+        //                     if (!schema.Required.Contains(key))
+        //                     {
+        //                         schema.Required.Add(key);
+        //                     }
 
-                            if (propertyValidator is INotEmptyValidator)
-                            {
-                                schema.Properties[key].MinLength = 1;
-                            }
-                        }
+        //                     if (propertyValidator is INotEmptyValidator)
+        //                     {
+        //                         schema.Properties[key].MinLength = 1;
+        //                     }
+        //                 }
 
-                        if (propertyValidator is ILengthValidator lengthValidator)
-                        {
-                            if (lengthValidator.Max > 0)
-                                schema.Properties[key].MaxLength = lengthValidator.Max;
+        //                 if (propertyValidator is ILengthValidator lengthValidator)
+        //                 {
+        //                     if (lengthValidator.Max > 0)
+        //                         schema.Properties[key].MaxLength = lengthValidator.Max;
 
-                            schema.Properties[key].MinLength = lengthValidator.Min;
-                        }
+        //                     schema.Properties[key].MinLength = lengthValidator.Min;
+        //                 }
 
-                        if (propertyValidator is IComparisonValidator comparisonValidator)
-                        {
-                            //var comparisonValidator = (IComparisonValidator)context.PropertyValidator;
-                            if (comparisonValidator.ValueToCompare.IsNumeric())
-                            {
-                                var valueToCompare = comparisonValidator.ValueToCompare.NumericToDecimal();
-                                var schemaProperty = schema.Properties[key];
+        //                 if (propertyValidator is IComparisonValidator comparisonValidator)
+        //                 {
+        //                     //var comparisonValidator = (IComparisonValidator)context.PropertyValidator;
+        //                     if (comparisonValidator.ValueToCompare.IsNumeric())
+        //                     {
+        //                         var valueToCompare = comparisonValidator.ValueToCompare.NumericToDecimal();
+        //                         var schemaProperty = schema.Properties[key];
 
-                                if (comparisonValidator.Comparison == Comparison.GreaterThanOrEqual)
-                                {
-                                    schemaProperty.Minimum = valueToCompare;
-                                }
-                                else if (comparisonValidator.Comparison == Comparison.GreaterThan)
-                                {
-                                    schemaProperty.Minimum = valueToCompare;
-                                    schemaProperty.ExclusiveMinimum = true;
-                                }
-                                else if (comparisonValidator.Comparison == Comparison.LessThanOrEqual)
-                                {
-                                    schemaProperty.Maximum = valueToCompare;
-                                }
-                                else if (comparisonValidator.Comparison == Comparison.LessThan)
-                                {
-                                    schemaProperty.Maximum = valueToCompare;
-                                    schemaProperty.ExclusiveMaximum = true;
-                                }
-                            }
-                        }
+        //                         if (comparisonValidator.Comparison == Comparison.GreaterThanOrEqual)
+        //                         {
+        //                             schemaProperty.Minimum = valueToCompare;
+        //                         }
+        //                         else if (comparisonValidator.Comparison == Comparison.GreaterThan)
+        //                         {
+        //                             schemaProperty.Minimum = valueToCompare;
+        //                             schemaProperty.ExclusiveMinimum = true;
+        //                         }
+        //                         else if (comparisonValidator.Comparison == Comparison.LessThanOrEqual)
+        //                         {
+        //                             schemaProperty.Maximum = valueToCompare;
+        //                         }
+        //                         else if (comparisonValidator.Comparison == Comparison.LessThan)
+        //                         {
+        //                             schemaProperty.Maximum = valueToCompare;
+        //                             schemaProperty.ExclusiveMaximum = true;
+        //                         }
+        //                     }
+        //                 }
 
-                        if (propertyValidator is RegularExpressionValidator expressionValidator)
-                        {
-                            schema.Properties[key].Pattern = expressionValidator.Expression;
-                        }
+        //                 if (propertyValidator is RegularExpressionValidator expressionValidator)
+        //                 {
+        //                     schema.Properties[key].Pattern = expressionValidator.Expression;
+        //                 }
 
-                        if (propertyValidator is IBetweenValidator betweenValidator)
-                        {
-                            var schemaProperty = schema.Properties[key];
+        //                 if (propertyValidator is IBetweenValidator betweenValidator)
+        //                 {
+        //                     var schemaProperty = schema.Properties[key];
 
-                            if (betweenValidator.From.IsNumeric())
-                            {
-                                schemaProperty.Minimum = betweenValidator.From.NumericToDecimal();
+        //                     if (betweenValidator.From.IsNumeric())
+        //                     {
+        //                         schemaProperty.Minimum = betweenValidator.From.NumericToDecimal();
 
-                                if (betweenValidator is ExclusiveBetweenValidator)
-                                {
-                                    schemaProperty.ExclusiveMinimum = true;
-                                }
-                            }
+        //                         if (betweenValidator is ExclusiveBetweenValidator)
+        //                         {
+        //                             schemaProperty.ExclusiveMinimum = true;
+        //                         }
+        //                     }
 
-                            if (betweenValidator.To.IsNumeric())
-                            {
-                                schemaProperty.Maximum = betweenValidator.To.NumericToDecimal();
+        //                     if (betweenValidator.To.IsNumeric())
+        //                     {
+        //                         schemaProperty.Maximum = betweenValidator.To.NumericToDecimal();
 
-                                if (betweenValidator is ExclusiveBetweenValidator)
-                                {
-                                    schemaProperty.ExclusiveMaximum = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //                         if (betweenValidator is ExclusiveBetweenValidator)
+        //                         {
+        //                             schemaProperty.ExclusiveMaximum = true;
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         public static OpenApiResponse CreateOpenApiResponse(Dictionary<string, SchemaElement> navigation, OpenApiDocument document, RouteMetaDataResponse valueStatusCode)
         {

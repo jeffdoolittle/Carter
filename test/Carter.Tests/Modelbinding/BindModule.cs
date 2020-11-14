@@ -17,39 +17,52 @@ namespace Carter.Tests.ModelBinding
 
             this.Post("/bindandvalidate", async (req, res) =>
             {
-                var model = await req.BindAndValidate<TestModel>();
-                if (!model.ValidationResult.IsValid)
-                {
-                    res.StatusCode = 422;
-                    await res.Negotiate(model.ValidationResult.GetFormattedErrors());
-                    return;
-                }
+                // var model = await req.BindAndValidate<TestModel>();
+                // if (!model.ValidationResult.IsValid)
+                // {
+                //     res.StatusCode = 422;
+                //     await res.Negotiate(model.ValidationResult.GetFormattedErrors());
+                //     return;
+                // }
 
-                await res.Negotiate(model.Data);
+                // await res.Negotiate(model.Data);
+
+                var model = await req.Bind<TestModel>();
+
+                await res.Negotiate(model);
             });
 
             this.Post("/novalidator", async (req, res) =>
             {
-                var model = await req.BindAndValidate<TestModelNoValidator>();
-                if (!model.ValidationResult.IsValid)
-                {
-                    await res.Negotiate(model.ValidationResult.GetFormattedErrors());
-                    return;
-                }
+                // var model = await req.BindAndValidate<TestModelNoValidator>();
+                // if (!model.ValidationResult.IsValid)
+                // {
+                //     await res.Negotiate(model.ValidationResult.GetFormattedErrors());
+                //     return;
+                // }
+
+                // await res.Negotiate(model);
+
+                var model = await req.Bind<TestModelNoValidator>();
 
                 await res.Negotiate(model);
             });
 
             this.Post("/duplicatevalidator", async (req, res) =>
             {
-                var model = await req.BindAndValidate<DuplicateTestModel>();
-                if (!model.ValidationResult.IsValid)
-                {
-                    await res.Negotiate(model.ValidationResult.GetFormattedErrors());
-                    return;
-                }
+                // var model = await req.BindAndValidate<DuplicateTestModel>();
+                // if (!model.ValidationResult.IsValid)
+                // {
+                //     await res.Negotiate(model.ValidationResult.GetFormattedErrors());
+                //     return;
+                // }
 
-                await res.Negotiate(model.Data);
+                // await res.Negotiate(model.Data);
+
+                var model = await req.Bind<DuplicateTestModel>();
+
+                await res.Negotiate(model);
+
             });
 
             this.Post("/bindandsave", async (req, res) =>

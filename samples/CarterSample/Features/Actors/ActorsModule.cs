@@ -26,14 +26,16 @@ namespace CarterSample.Features.Actors
 
             this.Put<UpdateActor>("/actors/{id:int}", async (req, res) =>
             {
-                var result = await req.BindAndValidate<Actor>();
+                // var result = await req.BindAndValidate<Actor>();
 
-                if (!result.ValidationResult.IsValid)
-                {
-                    res.StatusCode = 422;
-                    await res.Negotiate(result.ValidationResult.GetFormattedErrors());
-                    return;
-                }
+                // if (!result.ValidationResult.IsValid)
+                // {
+                //     res.StatusCode = 422;
+                //     await res.Negotiate(result.ValidationResult.GetFormattedErrors());
+                //     return;
+                // }
+
+                var result = await req.Bind<Actor>();
 
                 //Update the user in your database
 
@@ -42,19 +44,22 @@ namespace CarterSample.Features.Actors
 
             this.Post<AddActor>("/actors", async (req, res) =>
             {
-                var result = await req.BindAndValidate<Actor>();
+                // var result = await req.BindAndValidate<Actor>();
 
-                if (!result.ValidationResult.IsValid)
-                {
-                    res.StatusCode = 422;
-                    await res.Negotiate(result.ValidationResult.GetFormattedErrors());
-                    return;
-                }
+                // if (!result.ValidationResult.IsValid)
+                // {
+                //     res.StatusCode = 422;
+                //     await res.Negotiate(result.ValidationResult.GetFormattedErrors());
+                //     return;
+                // }
+
+                var result = await req.Bind<Actor>();
 
                 //Save the user in your database
 
                 res.StatusCode = 201;
-                await res.Negotiate(result.Data);
+                // await res.Negotiate(result.Data);
+                await res.Negotiate(result);
             });
 
             this.Delete<DeleteActor>("/actors/{id:int}", (req, res) =>

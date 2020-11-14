@@ -8,7 +8,7 @@ namespace Carter
     using Carter.ModelBinding;
     using Carter.OpenApi;
     using Carter.Response;
-    using FluentValidation;
+    // using FluentValidation;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
@@ -156,7 +156,7 @@ namespace Carter
         {
             var assemblies = assemblyCatalog.GetAssemblies();
 
-            var validators = GetValidators(carterConfigurator, assemblies);
+            // var validators = GetValidators(carterConfigurator, assemblies);
 
             var modules = GetModules(carterConfigurator, assemblies);
 
@@ -170,12 +170,12 @@ namespace Carter
             
             services.AddSingleton(carterConfigurator);
 
-            foreach (var validator in validators)
-            {
-                services.AddSingleton(typeof(IValidator), validator);
-            }
+            // foreach (var validator in validators)
+            // {
+            //     services.AddSingleton(typeof(IValidator), validator);
+            // }
 
-            services.AddSingleton<IValidatorLocator, DefaultValidatorLocator>();
+            // services.AddSingleton<IValidatorLocator, DefaultValidatorLocator>();
 
             services.AddRouting();
 
@@ -298,24 +298,24 @@ namespace Carter
             return modules;
         }
 
-        private static IEnumerable<Type> GetValidators(CarterConfigurator carterConfigurator, IReadOnlyCollection<Assembly> assemblies)
-        {
-            IEnumerable<Type> validators;
-            if (!carterConfigurator.ValidatorTypes.Any())
-            {
-                validators = assemblies.SelectMany(ass => ass.GetTypes())
-                    .Where(typeof(IValidator).IsAssignableFrom)
-                    .Where(t => !t.GetTypeInfo().IsAbstract);
+        // private static IEnumerable<Type> GetValidators(CarterConfigurator carterConfigurator, IReadOnlyCollection<Assembly> assemblies)
+        // {
+        //     IEnumerable<Type> validators;
+        //     if (!carterConfigurator.ValidatorTypes.Any())
+        //     {
+        //         validators = assemblies.SelectMany(ass => ass.GetTypes())
+        //             .Where(typeof(IValidator).IsAssignableFrom)
+        //             .Where(t => !t.GetTypeInfo().IsAbstract);
 
-                carterConfigurator.ValidatorTypes.AddRange(validators);
-            }
-            else
-            {
-                validators = carterConfigurator.ValidatorTypes;
-            }
+        //         carterConfigurator.ValidatorTypes.AddRange(validators);
+        //     }
+        //     else
+        //     {
+        //         validators = carterConfigurator.ValidatorTypes;
+        //     }
 
-            return validators;
-        }
+        //     return validators;
+        // }
 
         private class CompositeConventionBuilder : IEndpointConventionBuilder
         {

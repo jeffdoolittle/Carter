@@ -16,13 +16,15 @@
         {
             this.Post("/castmembers", async (req, res) =>
             {
-                var result = await req.BindAndValidate<CastMember>();
+                // var result = await req.BindAndValidate<CastMember>();
 
-                if (!result.ValidationResult.IsValid)
-                {
-                    await res.AsJson(result.ValidationResult.GetFormattedErrors());
-                    return;
-                }
+                // if (!result.ValidationResult.IsValid)
+                // {
+                //     await res.AsJson(result.ValidationResult.GetFormattedErrors());
+                //     return;
+                // }
+
+                var result = await req.Bind<CastMember>();
 
                 await res.WriteAsync("OK");
             });

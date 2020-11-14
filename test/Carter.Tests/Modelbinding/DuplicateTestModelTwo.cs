@@ -1,8 +1,8 @@
-namespace Carter.Tests.ModelBinding
-{
-    using FluentValidation;
+// namespace Carter.Tests.ModelBinding
+// {
+//     using FluentValidation;
 
-    public class DuplicateTestModelTwo : AbstractValidator<DuplicateTestModel>
-    {
-    }
-}
+//     public class DuplicateTestModelTwo : AbstractValidator<DuplicateTestModel>
+//     {
+//     }
+// }

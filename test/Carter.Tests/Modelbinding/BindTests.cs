@@ -11,7 +11,7 @@ namespace Carter.Tests.ModelBinding
     using System.Text.Json;
     using System.Threading.Tasks;
     using Carter.ModelBinding;
-    using FluentValidation.Results;
+    // using FluentValidation.Results;
     using global::Newtonsoft.Json;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -28,10 +28,10 @@ namespace Carter.Tests.ModelBinding
                     {
                         x.AddCarter(configurator: c =>
                         {
-                            c.WithModule<BindModule>()
-                                .WithValidator<TestModelValidator>()
-                                .WithValidator<DuplicateTestModelOne>()
-                                .WithValidator<DuplicateTestModelTwo>();
+                            c.WithModule<BindModule>();
+                                // .WithValidator<TestModelValidator>()
+                                // .WithValidator<DuplicateTestModelOne>()
+                                // .WithValidator<DuplicateTestModelTwo>();
                             c.WithModelBinder<DefaultJsonModelBinder>();
                         });
                     })
@@ -275,17 +275,17 @@ namespace Carter.Tests.ModelBinding
             }
         }
 
-        [Fact]
-        public async Task Should_return_validation_failure_result_when_invalid_data_for_rule()
-        {
-            var res = await this.httpClient.PostAsync("/bindandvalidate",
-                new StringContent("{\"MyIntProperty\":\"-1\",\"MyStringProperty\":\"\"}",
-                    Encoding.UTF8, "application/json"));
-            var body = await res.Content.ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<List<ValidationFailure>>(body);
+        // [Fact]
+        // public async Task Should_return_validation_failure_result_when_invalid_data_for_rule()
+        // {
+        //     var res = await this.httpClient.PostAsync("/bindandvalidate",
+        //         new StringContent("{\"MyIntProperty\":\"-1\",\"MyStringProperty\":\"\"}",
+        //             Encoding.UTF8, "application/json"));
+        //     var body = await res.Content.ReadAsStringAsync();
+        //     var model = JsonConvert.DeserializeObject<List<ValidationFailure>>(body);
 
-            Assert.Equal(2, model.Count);
-        }
+        //     Assert.Equal(2, model.Count);
+        // }
 
         [Fact]
         public async Task Should_return_validation_failure_result_when_no_validator_found()
@@ -321,19 +321,19 @@ namespace Carter.Tests.ModelBinding
                 body);
         }
 
-        [Fact]
-        public async Task Should_return_validation_failures_on_validation_after_bind_failure()
-        {
-            var res = await this.httpClient.PostAsync("/bindandvalidate",
-                new StringContent(
-                    "{\"MyIntProperty\":\"911\",\"MyStringProperty\":\"Vincent Vega\"}",
-                    Encoding.UTF8, "application/json"));
+        // [Fact]
+        // public async Task Should_return_validation_failures_on_validation_after_bind_failure()
+        // {
+        //     var res = await this.httpClient.PostAsync("/bindandvalidate",
+        //         new StringContent(
+        //             "{\"MyIntProperty\":\"911\",\"MyStringProperty\":\"Vincent Vega\"}",
+        //             Encoding.UTF8, "application/json"));
 
-            var body = await res.Content.ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<List<ValidationFailure>>(body);
+        //     var body = await res.Content.ReadAsStringAsync();
+        //     var model = JsonConvert.DeserializeObject<List<ValidationFailure>>(body);
 
-            Assert.Equal(HttpStatusCode.UnprocessableEntity, res.StatusCode);
-            Assert.Equal(2, model.Count);
-        }
+        //     Assert.Equal(HttpStatusCode.UnprocessableEntity, res.StatusCode);
+        //     Assert.Equal(2, model.Count);
+        // }
     }
 }

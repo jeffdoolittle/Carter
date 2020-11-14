@@ -59,57 +59,57 @@ namespace Carter.Tests
             Assert.Same(configurator, sameconfigurator);
         }
 
-        [Fact]
-        public void Should_add_single_validator()
-        {
-            //Given
-            var configurator = new CarterConfigurator();
+        // [Fact]
+        // public void Should_add_single_validator()
+        // {
+        //     //Given
+        //     var configurator = new CarterConfigurator();
 
-            //When
-            configurator.WithValidator<TestModelValidator>();
+        //     //When
+        //     configurator.WithValidator<TestModelValidator>();
 
-            //Then
-            Assert.Single(configurator.ValidatorTypes);
-        }
+        //     //Then
+        //     Assert.Single(configurator.ValidatorTypes);
+        // }
 
-        [Fact]
-        public void Should_return_same_instance_when_adding_validator()
-        {
-            //Given
-            var configurator = new CarterConfigurator();
+        // [Fact]
+        // public void Should_return_same_instance_when_adding_validator()
+        // {
+        //     //Given
+        //     var configurator = new CarterConfigurator();
 
-            //When
-            var sameconfigurator = configurator.WithValidator<TestModelValidator>();
+        //     //When
+        //     var sameconfigurator = configurator.WithValidator<TestModelValidator>();
 
-            //Then
-            Assert.Same(configurator, sameconfigurator);
-        }
+        //     //Then
+        //     Assert.Same(configurator, sameconfigurator);
+        // }
 
-        [Fact]
-        public void Should_add_multiple_validators()
-        {
-            //Given
-            var configurator = new CarterConfigurator();
+        // [Fact]
+        // public void Should_add_multiple_validators()
+        // {
+        //     //Given
+        //     var configurator = new CarterConfigurator();
 
-            //When 
-            configurator.WithValidators(typeof(TestModelValidator), typeof(DuplicateTestModelOne));
+        //     //When 
+        //     configurator.WithValidators(typeof(TestModelValidator), typeof(DuplicateTestModelOne));
 
-            //Then
-            Assert.Equal(2, configurator.ValidatorTypes.Count);
-        }
+        //     //Then
+        //     Assert.Equal(2, configurator.ValidatorTypes.Count);
+        // }
 
-        [Fact]
-        public void Should_return_same_instance_when_adding_multiple_validators()
-        {
-            //Given
-            var configurator = new CarterConfigurator();
+        // [Fact]
+        // public void Should_return_same_instance_when_adding_multiple_validators()
+        // {
+        //     //Given
+        //     var configurator = new CarterConfigurator();
 
-            //When
-            var sameconfigurator = configurator.WithValidators(typeof(TestModelValidator), typeof(DuplicateTestModelOne));
+        //     //When
+        //     var sameconfigurator = configurator.WithValidators(typeof(TestModelValidator), typeof(DuplicateTestModelOne));
 
-            //Then
-            Assert.Same(configurator, sameconfigurator);
-        }
+        //     //Then
+        //     Assert.Same(configurator, sameconfigurator);
+        // }
 
         [Fact]
         public void Should_add_single_statuscodehandler()

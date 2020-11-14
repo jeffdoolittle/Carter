@@ -43,18 +43,21 @@
 
             this.Post("/directors", async (req, res) =>
             {
-                var result = await req.BindAndValidate<Director>();
+                // var result = await req.BindAndValidate<Director>();
 
-                if (!result.ValidationResult.IsValid)
-                {
-                    res.StatusCode = 422;
-                    await res.Negotiate(result.ValidationResult.GetFormattedErrors());
-                    return;
-                }
+                // if (!result.ValidationResult.IsValid)
+                // {
+                //     res.StatusCode = 422;
+                //     await res.Negotiate(result.ValidationResult.GetFormattedErrors());
+                //     return;
+                // }
+
+                var result = await req.Bind<Director>();
 
                 var handler = RouteHandlers.CreateDirectorHandler;
 
-                var id = handler(result.Data);
+                // var id = handler(result.Data);
+                var id = handler(result);
 
                 res.StatusCode = 201;
                 res.Headers["Location"] = "/" + id;
@@ -62,20 +65,23 @@
 
             this.Put("/directors/{id:int}", async (req, res) =>
             {
-                var result = await req.BindAndValidate<Director>();
+                // var result = await req.BindAndValidate<Director>();
 
-                if (!result.ValidationResult.IsValid)
-                {
-                    res.StatusCode = 422;
-                    await res.Negotiate(result.ValidationResult.GetFormattedErrors());
-                    return;
-                }
+                // if (!result.ValidationResult.IsValid)
+                // {
+                //     res.StatusCode = 422;
+                //     await res.Negotiate(result.ValidationResult.GetFormattedErrors());
+                //     return;
+                // }
+
+                var result = await req.Bind<Director>();
 
                 var handler = RouteHandlers.UpdateDirectorHandler;
 
                 try
                 {
-                    var success = handler(result.Data);
+                    // var success = handler(result.Data);
+                    var success = handler(result);
 
                     if (!success)
                     {

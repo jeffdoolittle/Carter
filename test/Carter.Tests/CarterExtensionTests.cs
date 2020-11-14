@@ -4,7 +4,7 @@ namespace Carter.Tests
     using Carter.Tests.ContentNegotiation;
     using Carter.Tests.ModelBinding;
     using Carter.Tests.StatusCodeHandlers;
-    using FluentValidation;
+    // using FluentValidation;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
@@ -52,47 +52,47 @@ namespace Carter.Tests
             Assert.Equal(2,modules.Count());
         }
         
-        [Fact]
-        public void Should_register_assembly_scanned_valdators_when_no_configurator_used()
-        {
-            //Given
-            var serviceCollection = new ServiceCollection();
+        // [Fact]
+        // public void Should_register_assembly_scanned_valdators_when_no_configurator_used()
+        // {
+        //     //Given
+        //     var serviceCollection = new ServiceCollection();
 
-            //When
-            CarterExtensions.AddCarter(serviceCollection);
+        //     //When
+        //     CarterExtensions.AddCarter(serviceCollection);
 
-            //Then
-            var validators = serviceCollection.Where(x => x.ServiceType == typeof(IValidator));
-            Assert.True(validators.Count() > 1);
-        }
+        //     //Then
+        //     var validators = serviceCollection.Where(x => x.ServiceType == typeof(IValidator));
+        //     Assert.True(validators.Count() > 1);
+        // }
 
-        [Fact]
-        public void Should_register_validators_passed_in_by_configutator()
-        {
-            //Given
-            var serviceCollection = new ServiceCollection();
+        // [Fact]
+        // public void Should_register_validators_passed_in_by_configutator()
+        // {
+        //     //Given
+        //     var serviceCollection = new ServiceCollection();
 
-            //When
-            CarterExtensions.AddCarter(serviceCollection, configurator: configurator => configurator.WithValidator<TestModelValidator>());
+        //     //When
+        //     CarterExtensions.AddCarter(serviceCollection, configurator: configurator => configurator.WithValidator<TestModelValidator>());
 
-            //Then
-            var validators = serviceCollection.Where(x => x.ServiceType == typeof(IValidator));
-            Assert.Single(validators);
-        }
+        //     //Then
+        //     var validators = serviceCollection.Where(x => x.ServiceType == typeof(IValidator));
+        //     Assert.Single(validators);
+        // }
         
-        [Fact]
-        public void Should_register_multiple_validators_passed_in_by_configutator()
-        {
-            //Given
-            var serviceCollection = new ServiceCollection();
+        // [Fact]
+        // public void Should_register_multiple_validators_passed_in_by_configutator()
+        // {
+        //     //Given
+        //     var serviceCollection = new ServiceCollection();
 
-            //When
-            CarterExtensions.AddCarter(serviceCollection, configurator: configurator => configurator.WithValidators(typeof(TestModelValidator), typeof(DuplicateTestModelOne)));
+        //     //When
+        //     CarterExtensions.AddCarter(serviceCollection, configurator: configurator => configurator.WithValidators(typeof(TestModelValidator), typeof(DuplicateTestModelOne)));
 
-            //Then
-            var validators = serviceCollection.Where(x => x.ServiceType == typeof(IValidator));
-            Assert.Equal(2,validators.Count());
-        }
+        //     //Then
+        //     var validators = serviceCollection.Where(x => x.ServiceType == typeof(IValidator));
+        //     Assert.Equal(2,validators.Count());
+        // }
         
         [Fact]
         public void Should_register_assembly_scanned_statuscodehandlers_when_no_configurator_used()

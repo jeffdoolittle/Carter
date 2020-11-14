@@ -3,7 +3,7 @@ namespace Carter
     using System;
     using System.Collections.Generic;
     using Carter.ModelBinding;
-    using FluentValidation;
+    // using FluentValidation;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -75,28 +75,28 @@ namespace Carter
             return this;
         }
 
-        /// <summary>
-        /// Register a specific <see cref="IValidator"/>
-        /// </summary>
-        /// <typeparam name="T">The <see cref="IValidator"/> to register</typeparam>
-        /// <returns><see cref="CarterConfigurator"/></returns>
-        public CarterConfigurator WithValidator<T>() where T : IValidator
-        {
-            this.ValidatorTypes.Add(typeof(T));
-            return this;
-        }
+        // /// <summary>
+        // /// Register a specific <see cref="IValidator"/>
+        // /// </summary>
+        // /// <typeparam name="T">The <see cref="IValidator"/> to register</typeparam>
+        // /// <returns><see cref="CarterConfigurator"/></returns>
+        // public CarterConfigurator WithValidator<T>() where T : IValidator
+        // {
+        //     this.ValidatorTypes.Add(typeof(T));
+        //     return this;
+        // }
 
-        /// <summary>
-        /// Register specific <see cref="IValidator"/>s
-        /// </summary>
-        /// <param name="validators">An array of <see cref="IValidator"/>s</param>
-        /// <returns><see cref="CarterConfigurator"/></returns>
-        public CarterConfigurator WithValidators(params Type[] validators)
-        {
-            validators.MustDeriveFrom<IValidator>();
-            this.ValidatorTypes.AddRange(validators);
-            return this;
-        }
+        // /// <summary>
+        // /// Register specific <see cref="IValidator"/>s
+        // /// </summary>
+        // /// <param name="validators">An array of <see cref="IValidator"/>s</param>
+        // /// <returns><see cref="CarterConfigurator"/></returns>
+        // public CarterConfigurator WithValidators(params Type[] validators)
+        // {
+        //     validators.MustDeriveFrom<IValidator>();
+        //     this.ValidatorTypes.AddRange(validators);
+        //     return this;
+        // }
 
         /// <summary>
         /// Register a specific <see cref="IStatusCodeHandler"/>

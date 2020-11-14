@@ -3,7 +3,6 @@ source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 
 nuget Carter 5.2.0
 nuget fakeiteasy 6.0.0
-nuget FluentValidation 9.0.1
 nuget MartinCostello.Logging.XUnit 0.1.0
 nuget Microsoft.Extensions.DependencyModel 3.1.0
 nuget Microsoft.OpenApi 1.1.4

@@ -9,25 +9,25 @@ namespace Carter.ModelBinding
     using System.Text.Json;
     using System.Threading.Tasks;
     using Carter.Request;
-    using FluentValidation.Results;
+    // using FluentValidation.Results;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 
     public static class BindExtensions
     {
-        /// <summary>
-        /// Bind the incoming request body to a model and validate it
-        /// </summary>
-        /// <param name="request">Current <see cref="HttpRequest"/></param>
-        /// <typeparam name="T">Model type</typeparam>
-        /// <returns><see cref="ValidationResult"/> and bound model</returns>
-        public static async Task<(ValidationResult ValidationResult, T Data)> BindAndValidate<T>(this HttpRequest request)
-        {
-            var model = await request.Bind<T>();
+        // /// <summary>
+        // /// Bind the incoming request body to a model and validate it
+        // /// </summary>
+        // /// <param name="request">Current <see cref="HttpRequest"/></param>
+        // /// <typeparam name="T">Model type</typeparam>
+        // /// <returns><see cref="ValidationResult"/> and bound model</returns>
+        // public static async Task<(ValidationResult ValidationResult, T Data)> BindAndValidate<T>(this HttpRequest request)
+        // {
+        //     var model = await request.Bind<T>();
 
-            var validationResult = request.Validate(model);
-            return (validationResult, model);
-        }
+        //     var validationResult = request.Validate(model);
+        //     return (validationResult, model);
+        // }
 
         /// <summary>
         /// Bind the incoming request body to a model

@@ -4,18 +4,18 @@ namespace Carter
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using FluentValidation;
+    // using FluentValidation;
     using Microsoft.Extensions.DependencyModel;
 
     public class DependencyContextAssemblyCatalog
     {
         private readonly DependencyContext dependencyContext;
-        private static readonly string fluentValidationAssemblyName;
+        // private static readonly string fluentValidationAssemblyName;
         private static readonly string carterAssemblyName;
 
         static DependencyContextAssemblyCatalog()
         {
-            fluentValidationAssemblyName = typeof(IValidator).Assembly.GetName().Name;
+            // fluentValidationAssemblyName = typeof(IValidator).Assembly.GetName().Name;
             carterAssemblyName = typeof(CarterExtensions).Assembly.GetName().Name;
         }
 
@@ -50,7 +50,8 @@ namespace Carter
 
             foreach (var library in this.dependencyContext.RuntimeLibraries)
             {
-                if (IsReferencingCarter(library) || IsReferencingFluentValidation(library))
+                // if (IsReferencingCarter(library) || IsReferencingFluentValidation(library))
+                if (IsReferencingCarter(library))
                 {
                     foreach (var assemblyName in library.GetDefaultAssemblyNames(this.dependencyContext))
                     {
@@ -79,9 +80,9 @@ namespace Carter
             return library.Dependencies.Any(dependency => dependency.Name.Equals(carterAssemblyName));
         }
 
-        private static bool IsReferencingFluentValidation(Library library)
-        {
-            return library.Dependencies.Any(dependency => dependency.Name.Equals(fluentValidationAssemblyName));
-        }
+        // private static bool IsReferencingFluentValidation(Library library)
+        // {
+        //     return library.Dependencies.Any(dependency => dependency.Name.Equals(fluentValidationAssemblyName));
+        // }
     }
 }
